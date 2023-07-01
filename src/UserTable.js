@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './UserTable.css';
+// import { Link } from 'react-router-dom';
+
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
+
+  const handleOnClick = (userid) => {
+    console.log(userid)
+  }
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,31 +24,38 @@ const UserTable = () => {
   }, []);
 
   return (
-    <div className="center">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td>
-              <Link to={`/users/${user._id}`}>{user.name}</Link>
-            </td>
-            <td>
-              <Link to={`/users/${user._id}`}>{user.email}</Link>
-            </td>
-            <td>
-              <Link to={`/users/${user._id}`}>{user.address}</Link>
-            </td>
+    <div className="container">
+      <div className="card text-center">
+        <table className="table">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Address</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+
+              <tr key={user._id} onClick={()=>handleOnClick(user._id)} >
+                {/* <Link to={`/users/${user._id}`}> */}
+                <td>
+                  {user.name}
+                </td>
+                <td>
+                  {user.email}
+                </td>
+                <td>
+                  {user.address}
+                </td>
+                {/* </Link> */}
+              </tr>
+
+            ))}
+          </tbody>
+        </table>
+
+      </div>
     </div>
   );
 };
