@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+
 
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const handleOnClick = (userid) => {
-    console.log(userid)
+    navigate(`/user/${userid}`);
   }
 
   useEffect(() => {
@@ -56,6 +58,10 @@ const UserTable = () => {
         </table>
 
       </div>
+
+
+
+
     </div>
   );
 };
