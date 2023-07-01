@@ -4,8 +4,6 @@ import UserTable from './UserTable';
 import './Form.css';
 
 
-
-
 const App = () => {
   return (
     <div>
