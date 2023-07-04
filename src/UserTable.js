@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate} from 'react-router-dom';
-
-
+import { useNavigate } from 'react-router-dom';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  const handleOnClick = (userid) => {
-    navigate(`/user/${userid}`);
-  }
+  const handleOnClick = (userId) => {
+    navigate(`/user/${userId}`);
+  };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/users');
+      setUsers(response.data.users);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/users');
-        setUsers(response.data.users);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-    useEffect(() => {
+  useEffect(() => {
     fetchUsers();
 
-  const interval = setInterval(() => {
-    fetchUsers();
-  }, 1000); // Fetch users every 1 second
+    const interval = setInterval(() => {
+      fetchUsers();
+    }, 1000); // Fetch users every 1 second
 
-  return () => clearInterval(interval); // Cleanup the interval on component unmount
-}, []);
+    return () => clearInterval(interval); // Cleanup the interval on component unmount
+  }, []);
 
   return (
     <div className="container">
@@ -44,30 +42,19 @@ const UserTable = () => {
           </thead>
           <tbody>
             {users.map((user) => (
-
-              <tr key={user._id} onClick={()=>handleOnClick(user._id)} >
-                {/* <Link to={`/users/${user._id}`}> */}
+              <tr key={user._id} onClick={() => handleOnClick(user._id)}>
                 <td>
-                  {user.name}
+                  <a href={`/user/${user._id}`} className="table-link">
+                    {user.name}
+                  </a>
                 </td>
-                <td>
-                  {user.email}
-                </td>
-                <td>
-                  {user.address}
-                </td>
-                {/* </Link> */}
+                <td>{user.email}</td>
+                <td>{user.address}</td>
               </tr>
-
             ))}
           </tbody>
         </table>
-
       </div>
-
-
-
-
     </div>
   );
 };
