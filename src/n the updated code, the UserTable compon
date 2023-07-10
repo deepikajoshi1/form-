@@ -1,0 +1,10 @@
+n the updated code, the UserTable component checks
+if the users array is empty. If there are no users,
+it renders a message indicating that no users were found.
+Similarly, the UserDetail component checks if the data.
+user object is falsy. If there is no user data available,
+it renders a message indicating that the user was not found.
+
+By using these conditional statements,
+the user table and user details components will only be
+displayed when there are users or when user data is available, respectively.

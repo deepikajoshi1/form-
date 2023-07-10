@@ -35,21 +35,23 @@ const UserTable = () => {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">Name</th>
+              <th scope="col">Salutation</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Date of Birth</th>
+              <th scope="col">Gender</th>
               <th scope="col">Email</th>
-              <th scope="col">Address</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user._id} onClick={() => handleOnClick(user._id)}>
-                <td>
-                  <a href={`/user/${user._id}`} className="table-link">
-                    {user.name}
-                  </a>
-                </td>
+                <td>{user.salutation}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.dateOfBirth}</td>
+                <td>{user.gender}</td>
                 <td>{user.email}</td>
-                <td>{user.address}</td>
               </tr>
             ))}
           </tbody>

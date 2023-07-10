@@ -13,9 +13,8 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let response;
     try {
-      response = await axios.post('http://localhost:3000/api/user', {
+      await axios.post('http://localhost:3000/api/user', {
         salutation,
         firstName,
         lastName,
@@ -23,15 +22,8 @@ const Form = () => {
         gender,
         email,
       });
-      // Handle successful response
-      console.log('Form submitted successfully:', response);
-    } catch (error) {
-      // Handle error, e.g., display error message
-      console.error('Error submitting form:', error);
-      alert('Error submitting form. Please try again.');
-    }
-    if (response && response.status === 201) {
-      alert('User is saved!');
+      // Handle successful submission
+      alert('Form submitted successfully');
       // Clear fields
       setSalutation('');
       setFirstName('');
@@ -39,10 +31,14 @@ const Form = () => {
       setDateOfBirth('');
       setGender('');
       setEmail('');
+    } catch (error) {
+      // Handle error, e.g., display error message
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
     }
   };
 
-  return (
+return (
     <div className="container">
       <div className="row">
         <div className="mx-auto col-10 col-md-8 col-lg-6">

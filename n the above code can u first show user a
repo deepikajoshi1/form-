@@ -1,0 +1,2 @@
+in the above code can u first show user a form to update the current user details,
+ once he updates the data, then call this method (PUT request)to update
