@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const Form = () => {
   const [salutation, setSalutation] = useState('');
@@ -46,28 +48,85 @@ const Form = () => {
         <div className="mx-auto col-10 col-md-8 col-lg-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group row">
-              <label htmlFor="salutation">Salutation</label>
+              <label htmlFor="salutation" className="col-sm-2 col-form-label">
+                Salutation
+              </label>
               <div className="col-sm-10">
-                <select
-                  className="form-control"
-                  id="salutation"
-                  value={salutation}
-                  onChange={(e) => setSalutation(e.target.value)}
-                  required
-                >
-                  <option value="">Select Salutation</option>
-                  <option value="Ms">Ms</option>
-                  <option value="Mrs">Mrs</option>
-                  <option value="Madam">Madam</option>
-                  <option value="Mr">Mr</option>
-                  <option value="Master">Master</option>
-                  <option value="Sir">Sir</option>
-                </select>
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="salutationDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {salutation ? salutation : 'Select Salutation'}
+                    <span className="caret"></span>
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="salutationDropdown">
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Ms')}
+                      >
+                        Ms
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Mrs')}
+                      >
+                        Mrs
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Madam')}
+                      >
+                        Madam
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Mr')}
+                      >
+                        Mr
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Master')}
+                      >
+                        Master
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setSalutation('Sir')}
+                      >
+                        Sir
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             <div className="form-group row">
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstName" className="col-sm-2 col-form-label">
+                First Name
+              </label>
               <div className="col-sm-10">
                 <input
                   type="text"
@@ -82,7 +141,9 @@ const Form = () => {
             </div>
 
             <div className="form-group row">
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="lastName" className="col-sm-2 col-form-label">
+                Last Name
+              </label>
               <div className="col-sm-10">
                 <input
                   type="text"
@@ -97,7 +158,9 @@ const Form = () => {
             </div>
 
             <div className="form-group row">
-              <label htmlFor="dateOfBirth">Date of Birth</label>
+              <label htmlFor="dateOfBirth" className="col-sm-2 col-form-label">
+                Date of Birth
+              </label>
               <div className="col-sm-10">
                 <input
                   type="date"
@@ -111,24 +174,49 @@ const Form = () => {
             </div>
 
             <div className="form-group row">
-              <label htmlFor="gender">Gender</label>
+              <label htmlFor="gender" className="col-sm-2 col-form-label">
+                Gender
+              </label>
               <div className="col-sm-10">
-                <select
-                  className="form-control"
-                  id="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  required
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="genderDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {gender ? gender : 'Select Gender'}
+                    <span className="caret"></span>
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="genderDropdown">
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setGender('male')}
+                      >
+                        Male
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => setGender('female')}
+                      >
+                        Female
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             <div className="form-group row">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" className="col-sm-2 col-form-label">
+                Email
+              </label>
               <div className="col-sm-10">
                 <input
                   type="email"
