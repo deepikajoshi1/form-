@@ -24,16 +24,17 @@ export default function UserDetail() {
   const data = useLoaderData();
   const navigate = useNavigate();
 
-  const [name, setName] = useState(data.user.name);
+  const [salutation, setSalutation] = useState(data.user.salutation);
+  const [firstName, setFirstName] = useState(data.user.firstName);
+  const [lastName, setLastName] = useState(data.user.lastName);
+  const [gender, setGender] = useState(data.user.gender);
   const [email, setEmail] = useState(data.user.email);
-  const [address, setAddress] = useState(data.user.address);
-  const [gender, setGender] = useState(data.user.gender); // Added gender state
 
   const handleUpdate = async () => {
     try {
       const response = await axios.put(
         `http://localhost:3000/api/user/${data.user._id}`,
-        { name, email, address, gender } // Included gender in the request payload
+        { salutation, firstName, lastName, gender, email }
       );
 
       alert('User data updated successfully:', response.data);
@@ -63,13 +64,43 @@ export default function UserDetail() {
           <h5 className="card-title">User Details</h5>
           <form onSubmit={handleUpdate}>
             <div className="form-group">
-              <label htmlFor="nameInput">Name</label>
+              <label htmlFor="salutationInput">Salutation</label>
               <input
                 type="text"
                 className="form-control"
-                id="nameInput"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                id="salutationInput"
+                value={salutation}
+                onChange={(e) => setSalutation(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="firstNameInput">First Name</label>
+              <input
+                type="text"
+                className="form-control"
+                id="firstNameInput"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="lastNameInput">Last Name</label>
+              <input
+                type="text"
+                className="form-control"
+                id="lastNameInput"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="genderInput">Gender</label>
+              <input
+                type="text"
+                className="form-control"
+                id="genderInput"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -80,26 +111,6 @@ export default function UserDetail() {
                 id="emailInput"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="addressInput">Address</label>
-              <input
-                type="text"
-                className="form-control"
-                id="addressInput"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="genderInput">Gender</label>
-              <input
-                type="text"
-                className="form-control"
-                id="genderInput"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)} // Updated setGender usage
               />
             </div>
             <button type="submit" className="btn btn-primary">

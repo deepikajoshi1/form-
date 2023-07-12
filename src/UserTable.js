@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
+
+
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
@@ -32,7 +34,7 @@ const UserTable = () => {
   return (
     <div className="container">
       <div className="card text-center">
-        <table className="table">
+        <table className="table table-hover">
           <thead className="thead-dark">
             <tr>
               <th scope="col">Salutation</th>
@@ -45,18 +47,16 @@ const UserTable = () => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id} onClick={() => handleOnClick(user._id)}>
-                <td>
-                  <Link to={`/user/${user._id}`} className="table-link">
-                    {user.salutation}
-                  </Link>
-                </td>
+              <tr style = {{cursor:"pointer"}}  key={user._id} onClick={() => handleOnClick(user._id)}>
+                <td>{user.salutation}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.dateOfBirth}</td>
                 <td>{user.gender}</td>
                 <td>{user.email}</td>
+
               </tr>
+
             ))}
           </tbody>
         </table>
