@@ -27,6 +27,7 @@ export default function UserDetail() {
   const [salutation, setSalutation] = useState(data.user.salutation);
   const [firstName, setFirstName] = useState(data.user.firstName);
   const [lastName, setLastName] = useState(data.user.lastName);
+  const [dateOfBirth, setDateOfBirth] = useState(data.user.dateOfBirth);
   const [gender, setGender] = useState(data.user.gender);
   const [email, setEmail] = useState(data.user.email);
 
@@ -34,7 +35,7 @@ export default function UserDetail() {
     try {
       const response = await axios.put(
         `http://localhost:3000/api/user/${data.user._id}`,
-        { salutation, firstName, lastName, gender, email }
+        { salutation, firstName, lastName, dateOfBirth, gender, email }
       );
 
       alert('User data updated successfully:', response.data);
@@ -91,6 +92,16 @@ export default function UserDetail() {
                 id="lastNameInput"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="lastNameInput">Date of Birth</label>
+              <input
+                type="text"
+                className="form-control"
+                id="lastNameInput"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
               />
             </div>
             <div className="form-group">
