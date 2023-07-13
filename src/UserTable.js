@@ -16,7 +16,9 @@ const UserTable = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/users');
+      console.log(response)
       setUsers(response.data.users);
+
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -24,12 +26,6 @@ const UserTable = () => {
 
   useEffect(() => {
     fetchUsers();
-
-    const interval = setInterval(() => {
-      fetchUsers();
-    }, 1000); // Fetch users every 1 second
-
-    return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, []);
 
   if (users.length > 0) {

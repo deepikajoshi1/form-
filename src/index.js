@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import UserDetails, { loader as userLoader } from './UserDetails';
+import UserDetails from './UserDetails';
 import 'bootstrap/dist/css/bootstrap.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
@@ -23,8 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'user/:userid',
-    element: <UserDetails />,
-    loader: userLoader,
+    element: <UserDetails />
   },
 ]);
 

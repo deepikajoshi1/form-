@@ -1,54 +1,80 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLoaderData } from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export async function loader({ params }) {
-  const API = `http://localhost:3000/api/user/${params.userid}`;
+import { useParams } from 'react-router-dom';
 
-  try {
-    const response = await fetch(API);
 
-    if (!response.ok) throw new Error();
-    const data = await response.json();
-    return data;
-  } catch {
-    throw new Response(null, {
-      status: 500,
-      statusText: 'Internal Server Error',
-    });
-  }
-}
 
 export default function UserDetail() {
-  const data = useLoaderData();
+
+  let {userid} = useParams();
+  let [user, setUser] = useState(null)
+
+  const [salutation, setSalutation] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState();
+  const [gender, setGender] = useState();
+  const [email, setEmail] = useState();
+
+
+  const fetchData = async (userid) => {
+
+    // using fetch here... axios
+    // let data = await (
+    //   await fetch(`http://localhost:3000/api/user/${userid}`)
+    // ).json();
+
+    let response = await axios.get(`http://localhost:3000/api/user/${userid}`)
+    let data = response.data
+    setUser(data.user)
+    setSalutation(data.user.salutation)
+    setDateOfBirth(data.user.dateOfBirth)
+    setEmail(data.user.email)
+    setGender(data.user.gender)
+    setLastName(data.user.lastName)
+    setFirstName(data.user.firstName)
+  };
+
+
+
+useEffect(() => {
+  fetchData(userid);
+}
+,[userid])
+
+
   const navigate = useNavigate();
 
-  const [salutation, setSalutation] = useState(data.user.salutation);
-  const [firstName, setFirstName] = useState(data.user.firstName);
-  const [lastName, setLastName] = useState(data.user.lastName);
-  const [dateOfBirth, setDateOfBirth] = useState(data.user.dateOfBirth);
-  const [gender, setGender] = useState(data.user.gender);
-  const [email, setEmail] = useState(data.user.email);
-
   const handleUpdate = async () => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/api/user/${data.user._id}`,
-        { salutation, firstName, lastName, dateOfBirth, gender, email }
+    let response;
+    try{
+       response = await axios.put(
+        `http://localhost:3000/api/user/${user._id}`,
+        {
+          salutation,
+          firstName,
+          lastName,
+          dateOfBirth,
+          gender,
+          email,
+        }
       );
-
       alert('User data updated successfully:', response.data);
       navigate(`/`);
     } catch (err) {
       console.error('Error updating user data:', err);
     }
+    console.log("This line", response)
   };
 
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/user/${data.user._id}`
+        `http://localhost:3000/api/user/${user._id}`
       );
 
       alert('User data deleted successfully:', response.data);
@@ -123,6 +149,7 @@ export default function UserDetail() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+
             </div>
             <button type="submit" className="btn btn-primary">
               Update
