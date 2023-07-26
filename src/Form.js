@@ -11,8 +11,8 @@ const Form = () => {
   const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+
     try {
       await axios.post('http://localhost:3000/api/user', {
         salutation,

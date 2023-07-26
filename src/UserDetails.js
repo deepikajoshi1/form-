@@ -13,12 +13,12 @@ export default function UserDetail() {
   let {userid} = useParams();
   let [user, setUser] = useState(null)
 
-  const [salutation, setSalutation] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [dateOfBirth, setDateOfBirth] = useState();
-  const [gender, setGender] = useState();
-  const [email, setEmail] = useState();
+  const [salutation, setSalutation] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
 
 
   const fetchData = async (userid) => {
@@ -49,10 +49,13 @@ useEffect(() => {
 
   const navigate = useNavigate();
 
-  const handleUpdate = async () => {
-    let response;
+  const handleUpdate = async (event) => {
     try{
-       response = await axios.put(
+      event.preventDefault();
+      // event.preventDefault() is added later for after
+      // updating the user details, page will redirect to the
+      // home page
+       const response = await axios.put(
         `http://localhost:3000/api/user/${user._id}`,
         {
           salutation,
@@ -68,7 +71,7 @@ useEffect(() => {
     } catch (err) {
       console.error('Error updating user data:', err);
     }
-    console.log("This line", response)
+
   };
 
   const handleDelete = async () => {
