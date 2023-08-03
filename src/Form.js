@@ -4,15 +4,45 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const Form = () => {
+  // State variables for form fields
   const [salutation, setSalutation] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // Function to handle blur event of the email input box
+  const handleEmailBlur = async () => {
+
+    const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regexCheck = regEx.test(email);
+
+    if (regexCheck) {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/user/email/${email}`);
+        const { emailExists } = response.data;
+        if (emailExists) {
+          setMessage("Email already exists");
+        } else {
+          setMessage("");
+        }
+      } catch (error) {
+        console.error('Error checking email:', error);
+        setMessage('Error checking email. Please try again later.');
+      }
+    } else if (!regexCheck || email !== "") {
+      setMessage("Email is not valid");
+    } else {
+      setMessage("");
+    }
+  };
   const handleSubmit = async () => {
-
     try {
       await axios.post('http://localhost:3000/api/user', {
         salutation,
@@ -31,18 +61,42 @@ const Form = () => {
       setDateOfBirth('');
       setGender('');
       setEmail('');
+
     } catch (error) {
       // Handle error, e.g., display error message
       console.error('Error submitting form:', error);
       alert('Error submitting form. Please try again.');
     }
   };
+  // Function to check if the message is in red color (i.e., error message)
+  const isErrorMessage = () => {
+    return message && message.length > 0 && message !== '';
+  };
 
-return (
+  return (
     <div className="container">
       <div className="row">
         <div className="mx-auto col-10 col-md-8 col-lg-6">
           <form onSubmit={handleSubmit}>
+            {/* Email input field */}
+            <div className="form-group row">
+              <label htmlFor="email" className="col-sm-2 col-form-label">
+                Email
+              </label>
+              <div className="col-sm-10">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
+                  required
+                />
+                <span style={{ color: 'red' }}>{message}</span>
+              </div>
+            </div>
             <div className="form-group row">
               <label htmlFor="salutation" className="col-sm-2 col-form-label">
                 Salutation
@@ -118,7 +172,6 @@ return (
                 </div>
               </div>
             </div>
-
             <div className="form-group row">
               <label htmlFor="firstName" className="col-sm-2 col-form-label">
                 First Name
@@ -135,7 +188,6 @@ return (
                 />
               </div>
             </div>
-
             <div className="form-group row">
               <label htmlFor="lastName" className="col-sm-2 col-form-label">
                 Last Name
@@ -152,7 +204,6 @@ return (
                 />
               </div>
             </div>
-
             <div className="form-group row">
               <label htmlFor="dateOfBirth" className="col-sm-2 col-form-label">
                 Date of Birth
@@ -168,7 +219,6 @@ return (
                 />
               </div>
             </div>
-
             <div className="form-group row">
               <label htmlFor="gender" className="col-sm-2 col-form-label">
                 Gender
@@ -208,25 +258,7 @@ return (
                 </div>
               </div>
             </div>
-
-            <div className="form-group row">
-              <label htmlFor="email" className="col-sm-2 col-form-label">
-                Email
-              </label>
-              <div className="col-sm-10">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <button type="submit" className="btn btn-primary mb-2">
+            <button type="submit" className="btn btn-primary mb-2" disabled={isErrorMessage()}>
               Submit
             </button>
           </form>
