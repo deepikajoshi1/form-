@@ -20,7 +20,7 @@ const Form = () => {
   // Function to handle blur event of the email input box
   const handleEmailBlur = async () => {
 
-    const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const regexCheck = regEx.test(email);
 
     if (regexCheck) {
